@@ -1,7 +1,7 @@
 package com.atguigu.springcloud.controller;
 
-import entities.CommonRusult;
-import entities.Payment;
+import com.atguigu.springcloud.entities.CommonRusult;
+import com.atguigu.springcloud.entities.Payment;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,7 +29,7 @@ public class OrderController {
         return restTemplate.postForObject(PAYMENT_URL + "/payment/create", payment, CommonRusult.class);//传输对象请求使用 postForObject
     }
 
-    @GetMapping("/consumer/payment/get/{id}")
+    @GetMapping("/consumer/payment/getPaymentById/{id}")
     public CommonRusult<Payment> getPayMent(@PathVariable("id") Long id) {
         return restTemplate.getForObject(PAYMENT_URL + "/payment/getPaymentById/" + id, CommonRusult.class); //查询对象请求使用 getForObject
     }
