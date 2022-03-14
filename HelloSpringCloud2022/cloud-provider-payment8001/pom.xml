@@ -18,6 +18,12 @@
     </properties>
 
     <dependencies>
+        <!--        可以引入（自定义模块的依赖g、a、v），实现相应的功能-->
+        <dependency>
+            <groupId>com.atguigu.springcloud</groupId>
+            <artifactId>cloud-api-commons</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!--包含了sleuth+zipkin-->
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.cloud</groupId>-->
@@ -27,11 +33,6 @@
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.cloud</groupId>-->
 <!--            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>&lt;!&ndash; 引入自己定义的api通用包，可以使用Payment支付Entity &ndash;&gt;-->
-<!--            <groupId>com.atguigu.springcloud</groupId>-->
-<!--            <artifactId>cloud-api-commons</artifactId>-->
-<!--            <version>${project.version}</version>-->
 <!--        </dependency>-->
 
         <!--    web 和 actuator 用于 springboot 的页面、图形监控-->
