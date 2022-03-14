@@ -13,6 +13,7 @@
 <!--    modules:父子类工程中，这个是子模块的标记-->
     <modules>
         <module>cloud-provider-payment8001</module>
+        <module>cloud-consumer-order80</module>
     </modules>
 
 
