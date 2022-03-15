@@ -22,7 +22,14 @@ public class OrderController {
     @Resource
     private RestTemplate restTemplate;
 
-    static final String PAYMENT_URL = "http://localhost:8001";
+    /**
+     * 写入门程序时，这块的地址和端口是写死的，但是当支付模块处于集群模式时，对外暴漏的不再是 url和 port，此时设置为集群模式下模块在 eureka 下注册的微服务名称。
+     * 想让 eureka 决定使用哪个微服务提供服务与相应，就需要对容器中的 restTemplate 对象添加一个 @LoadBalanced ,实现 restTemplate 的负载均衡能力。
+     * 1.此时，使用的是 “轮询”的默认机制
+     * 2.Ribbon 和 Eureka 整合后 Consumer 可以直接调用服务而不用再关心地址和端口号，且该服务还有负载功能了。O(∩_∩)O
+     */
+//    static final String PAYMENT_URL = "http://localhost:8001";        //单机环境下，微服务集群的使用
+    static final String PAYMENT_URL = "http://CLOUD-PAYMENT-SERVICE";   //集群环境下，微服务集群的使用
 
     @GetMapping("/consumer/payment/create")//客户端：发送查询请求
     public CommonRusult<Payment> create(Payment payment) {
