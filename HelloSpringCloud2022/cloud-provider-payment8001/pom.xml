@@ -18,23 +18,18 @@
     </properties>
 
     <dependencies>
+        <!--eureka-client；将 cloud-provider-payment8001 这个服务注册进 EurekaServer 使其成为服务提供者 provider-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+
         <!--        可以引入（自定义模块的依赖g、a、v），实现相应的功能-->
         <dependency>
             <groupId>com.atguigu.springcloud</groupId>
             <artifactId>cloud-api-commons</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <!--包含了sleuth+zipkin-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-zipkin</artifactId>-->
-<!--        </dependency>-->
-        <!--eureka-client-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>-->
-<!--        </dependency>-->
-
         <!--    web 和 actuator 用于 springboot 的页面、图形监控-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
