@@ -69,4 +69,10 @@ public class PaymentController {
         }
         return this.discoveryClient;
     }
+
+    @GetMapping(value = "/payment/lb")
+    public String getPaymentLB(){
+        log.info("PaymentMain8001 注册到 eureka 服务器，通过自定义的<轮询>负载均衡算法，访问该服务下的请求，该服务器的端口为{}。",serverPort);
+        return serverPort;
+    }
 }

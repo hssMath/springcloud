@@ -48,4 +48,10 @@ public class PaymentController {
             return new CommonRusult(444, "没有对应的记录，id:" + id, null);
         }
     }
+
+    @GetMapping(value = "/payment/lb")
+    public String getPaymentLB(){
+        log.info("PaymentMain8002 注册到 eureka 服务器，通过自定义的<轮询>负载均衡算法，访问该服务下的请求，该服务器的端口为{}。",serverPort);
+        return serverPort;
+    }
 }
