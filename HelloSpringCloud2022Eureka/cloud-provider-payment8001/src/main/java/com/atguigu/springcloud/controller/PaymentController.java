@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 支付模块，用于订单模块进行跨模块调用
@@ -73,6 +74,17 @@ public class PaymentController {
     @GetMapping(value = "/payment/lb")
     public String getPaymentLB(){
         log.info("PaymentMain8001 注册到 eureka 服务器，通过自定义的<轮询>负载均衡算法，访问该服务下的请求，该服务器的端口为{}。",serverPort);
+        return serverPort;
+    }
+
+    @GetMapping(value = "/payment/feign/timeout")
+    public String paymentFeignTimeOut() {
+        System.out.println("*****paymentFeignTimeOut from port: " + serverPort);
+        try {//暂停几秒钟线程
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return serverPort;
     }
 }
