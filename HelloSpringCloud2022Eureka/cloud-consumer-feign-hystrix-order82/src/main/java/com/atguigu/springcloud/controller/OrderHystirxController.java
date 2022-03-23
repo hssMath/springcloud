@@ -1,6 +1,7 @@
 package com.atguigu.springcloud.controller;
 
 import com.atguigu.springcloud.service.PaymentHystrixService;
+import com.netflix.hystrix.contrib.javanica.annotation.DefaultProperties;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import lombok.extern.slf4j.Slf4j;
@@ -10,8 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
+/**
+ * 82模块调用8003模块，接口通用的和独享的 Fallback 方法各自分开，避免了代码膨胀，合理减少了代码量，O(∩_∩)O哈哈~
+ */
+
 @RestController
 @Slf4j
+@DefaultProperties(defaultFallback = "payment_Global_FallbackMethod") //1：N 除了个别重要核心业务有专属，其它普通的可以通过@DefaultProperties(defaultFallback = "")  统一跳转到统一处理结果页面
 public class OrderHystirxController {
     @Resource
     private PaymentHystrixService paymentHystrixService;
@@ -39,12 +45,13 @@ public class OrderHystirxController {
         return result;
     }
 
-    /**
-     * 兜底的降级方法
-     * @param id
-     * @return String
-     */
+    //兜底的 fallback 降级方法
     public String paymentTimeOutFallbackMethod(@PathVariable("id") Integer id) {
         return "o(╥﹏╥)o，82订单微服务调用8003支付微服务或者自己运行时出错,请稍后再试";
+    }
+
+    //全局fallback方法
+    public String payment_Global_FallbackMethod(){
+        return "Global异常处理信息，请稍后再试，(ㄒoㄒ)";
     }
 }

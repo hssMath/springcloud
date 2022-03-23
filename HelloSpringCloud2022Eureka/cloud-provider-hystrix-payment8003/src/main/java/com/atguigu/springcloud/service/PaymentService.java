@@ -1,8 +1,10 @@
 package com.atguigu.springcloud.service;
 
+import cn.hutool.core.util.IdUtil;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 public class PaymentService {
@@ -36,5 +38,27 @@ public class PaymentService {
      */
     public String paymentInfo_TimeOutHandler(Integer id) {
         return "(ㄒoㄒ)，8003支付微服务接口的 paymentInfo_TimeOut超时或异常了：\t"+ "\t当前线程池名字" + Thread.currentThread().getName();
+    }
+
+
+
+    //==========================服务熔断==========================================================
+    //定义一个服务熔断的 CircuitBreaker 方法
+    @HystrixCommand(fallbackMethod = "paymentCircuitBreaker_fallback", commandProperties = {
+            @HystrixProperty(name = "circuitBreaker.enabled", value = "true"), //是否开启断路器
+            @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "10"), //请求总数阈值：默认为20，表示在10s内，如果 hystirx 命令的调用次数不足20次，即使所有的请求都超时或者其他原因失败，熔断器都不会打开。
+            @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "10000"), //时间窗口期（单位：ms）：在默认的时间间隔为10s期间，断路器打开统计，统计一些错误请求和数据。
+            @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "60"), //失败率达到多少后跳闸：当请求总数在快照时间窗口期内超过了阈值，并且默认超过50%的错误百分比时，断路器才会打开。
+    })
+    public String paymentCircuitBreaker(@PathVariable("id") Integer id) {
+        if (id < 0) {
+            throw new RuntimeException("******id 不能负数");
+        }
+        String serialNumber = IdUtil.simpleUUID();
+        return Thread.currentThread().getName() + "\t" + "调用成功，流水号: " + serialNumber;
+    }
+    //服务降低的兜底方法
+    public String paymentCircuitBreaker_fallback(@PathVariable("id") Integer id) {
+        return "id 不能负数，请稍后再试，/(ㄒoㄒ)/~~   id: " + id;
     }
 }
