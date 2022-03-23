@@ -9,12 +9,17 @@ eureka:
 
 ribbon: #设置 feign 客户端超时时间(OpenFeign默认支持ribbon)
   ReadTimeout: 5000 #指的是建立连接所用的时间，适用于网络状况正常的情况下,两端连接所用的时间
-  ConnectTimeout: 5000 #指的是建立连接后从服务器读取到可用资源所用的时间
+  ConnectTimeout: 6000 #指的是建立连接后从服务器读取到可用资源所用的时间
 
 logging:
   level:
-    com.atguigu.springcloud.service.PaymentFeignService: debug  #feign日志以什么级别监控哪个接口
+    com.atguigu.springcloud.service.PaymentHystrixService: debug,  #feign日志以什么级别监控哪个接口
+    com.atguigu.springcloud.service.PaymentHystrixRolveBussinessConfuseService: debug  #feign日志以什么级别监控哪个接口
 
 feign:
   hystrix:
-    enabled: true #开启服务调用者的 Hystrix，进而可以进行服务降级。
+    enabled: true #开启微服务调用者的 Hystrix 的服务降级功能。
+
+spring:
+  main:
+    allow-bean-definition-overriding: true

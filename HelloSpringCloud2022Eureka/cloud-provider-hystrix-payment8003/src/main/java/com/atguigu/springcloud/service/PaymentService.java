@@ -7,17 +7,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class PaymentService {
     public String paymentInfo_OK(Integer id) {
-        return "线程池:" + Thread.currentThread().getName() + "paymentInfo_OK,id: " + id + "\t" + "O(∩_∩)O";
+        return "O(∩_∩)O，8003支付微服务的 paymentInfo_OK 方法执行成功了，执行的线程名称为：" + Thread.currentThread().getName();
     }
 
     /**
-     * 开启服务被调用者的使用 Hystrix 实现的服务降级功能。通过2个设置:设置兜底的封装好的友好提示对应的方法；设置服务降级的超时响应时间条件。
+     * 开启服务端的使用 Hystrix 实现的服务降级功能。通过2个设置:设置兜底的封装好的友好提示对应的方法；设置服务降级的超时响应时间条件。
      * @param id
      * @return
      */
     @HystrixCommand(fallbackMethod = "paymentInfo_TimeOutHandler",commandProperties ={
-            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds",value = "5000")
-    } )
+            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds",value = "3500")
+    })
     public String paymentInfo_TimeOut(Integer id) {
         int timeNumber = 0;
         try {
@@ -26,7 +26,7 @@ public class PaymentService {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return "8003服务调用：paymentInfo_TimeOut方法，线程名称：" + Thread.currentThread().getName() + "，id: " + id + "，" + "O(∩_∩)O，耗费"+timeNumber/1000+"秒";
+        return "O(∩_∩)O，8003支付微服务接口的 paymentInfo_TimeOut 方法执行了，线程名称：" + Thread.currentThread().getName() + "，查询id: " + id + "的信息，" + "耗费"+timeNumber/1000+"秒。";
     }
 
     /**
@@ -35,6 +35,6 @@ public class PaymentService {
      * @return
      */
     public String paymentInfo_TimeOutHandler(Integer id) {
-        return "(ㄒoㄒ)调用支付接口超时或异常：\t"+ "\t当前线程池名字" + Thread.currentThread().getName();
+        return "(ㄒoㄒ)，8003支付微服务接口的 paymentInfo_TimeOut超时或异常了：\t"+ "\t当前线程池名字" + Thread.currentThread().getName();
     }
 }
