@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RefreshScope   //具备刷新能力
+@RefreshScope      //具备刷新能力
 public class ConfigClientController {
     @Value("${server.port}")
     private String serverPort;

@@ -1,0 +1,2 @@
+config:
+  info: "springcloud:config-client-dev.yml version = 2"
