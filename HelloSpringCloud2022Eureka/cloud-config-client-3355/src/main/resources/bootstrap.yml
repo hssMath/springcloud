@@ -20,7 +20,10 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:7001/eureka
+      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka  #集群版：表示注册进 Eureka 的服务调用地址。
+  instance:
+    instance-id: config-enter-3355
+    prefer-ip-address: true     #访问路径可以显示IP地址
 
 # 暴露监控端点
 management:
@@ -28,3 +31,10 @@ management:
     web:
       exposure:
         include: "*"
+
+#rabbitmq 相关配置 15672是Web管理界面的端口；5672是MQ访问的端口
+rabbitmq:
+  host: localhost
+  port: 5672
+  username: rabbit
+  password: rabbit
