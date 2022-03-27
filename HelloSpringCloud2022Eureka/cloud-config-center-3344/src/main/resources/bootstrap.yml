@@ -18,9 +18,10 @@ eureka:
   client:
     service-url:
       defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka  #集群版：表示注册进 Eureka 的服务调用地址。
-  instance:
-    instance-id: config-enter-3344
-    prefer-ip-address: true     #访问路径可以显示IP地址
+  instance:                           #微服务实例的设置
+    instance-id: config-enter-3344    # eureka 监控页面显示微服务名称
+    prefer-ip-address: true           #访问路径可以显示IP地址
+
 #rabbitmq 相关配置,暴露 bus 刷新配置的端点
 management:
   endpoints: #暴露bus刷新配置的端点
