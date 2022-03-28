@@ -4,6 +4,11 @@ server:
 spring:
   application:
     name: cloud-order-service #注册进 eureka 服务注册中心的 服务名称
+  zipkin:
+    base-url: http://localhost:9411
+    sleuth:
+      sampler:
+        probability: 1
 
 eureka:
   client:

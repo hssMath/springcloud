@@ -18,7 +18,7 @@ import java.net.URI;
 import java.util.List;
 
 /**
- * 服务之间的调用，模块之间的调用。
+ * 微服务实例之间的调用，模块之间的调用。
  *      正确的做法是使用 httpClient，这里使用的是 RestTempalte(对 httpClient 的封装)，也可以使用注入 service 的方式。
  * 1.订单模块调用支付模块，实际是将请求在客户端模块使用 httpClient 将请求将请求进行了一个构造，然后通过构造的请求进行模块之间的通信。
  */
@@ -87,5 +87,12 @@ public class OrderController {
         return restTemplate.getForObject(uri+"/payment/lb",String.class);
     }
 
+
+    // ====================> zipkin+sleuth======================
+    @GetMapping("/consumer/payment/zipkin")
+    public String paymentZipkin() {
+        String result = restTemplate.getForObject(PAYMENT_URL + "/payment/zipkin", String.class);
+        return result;
+    }
 }
 

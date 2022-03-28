@@ -10,6 +10,12 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/springcloud?useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: mysql
     password: mysql
+  zipkin:
+    base-url: http://localhost:9411   #将该服务的调用注册到 zipkin 上，在 9411 上就能看到。
+    sleuth:
+      sampler:
+        probability: 1                #采样率值介于 0 到 1 之间，1 则表示全部采集
+
 mybatis:
   mapperLocations: classpath:mapper/*.xml
   type-aliases-package: com.atguigu.springcloud.entities    # 所有Entity别名类所在包
