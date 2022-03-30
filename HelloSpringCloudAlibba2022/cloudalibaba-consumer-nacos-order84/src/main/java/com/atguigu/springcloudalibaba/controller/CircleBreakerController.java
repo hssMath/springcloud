@@ -62,6 +62,10 @@ public class CircleBreakerController {
     @Resource
     private PaymentService paymentService;
     @GetMapping(value = "/consumer/paymentSQLByOpenfeign/{id}")
+    @SentinelResource(value = "paymentSQLByOpenfeign",
+            fallback = "handlerFallback",   //Java 运行异常兜底方法
+            blockHandler = "blockHandler",  //sentinel 限流执行的兜底方法
+            exceptionsToIgnore = {IllegalArgumentException.class})  //排除指定异常：先让程序走通，后期人工修复
     public CommonResult<Payment> paymentSQLByOpenfeign(@PathVariable("id") Long id) {
         if (id == 4) {
             throw new RuntimeException("没有该id");
