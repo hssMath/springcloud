@@ -33,6 +33,9 @@ public class SnowFlakeIdServiceImpl implements SnowFlakeIdService {
 
     @Override
     public void getMoreSnowFlakeId() {
+        /**
+         * 通过线程池创建多线程
+         */
         ExecutorService threadPool = Executors.newFixedThreadPool(5);
         for (int i = 0; i < 20; i++) {
             threadPool.submit(()->{
